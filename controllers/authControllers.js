@@ -16,7 +16,7 @@ export async function signup(req, res) {
     const token = generateToken(newUser._id);
     res.json({ token });
   } catch (err) {
-    res.json({ error: err.message });
+    res.status(401).json({ error: err.message });
   }
 }
 
@@ -34,13 +34,26 @@ export async function login(req, res) {
         const token = generateToken(user._id);
         res.json({ token });
       } catch (err) {
-        res.json({ error: err.message });
+        res.status(401).json({ error: err.message });
       }
     } else {
-      res.json({ error: "Username or Password incorrect" });
+      res.status(401).json({ error: "Username or Password incorrect" });
     }
   } else {
     console.log("user doesn't exists");
-    res.json({ error: "Username or Password incorrect" });
+    res.status(401).json({ error: "Username or Password incorrect" });
+  }
+}
+
+export async function changePassword(req, res) {
+  const { oldPassword, newPassword } = req.body;
+  const user = await User.findById(req.userId);
+  const passwordIsCorrect = await comparePassword(oldPassword, user.password);
+  if (passwordIsCorrect) {
+    user.password = await hashPassword(newPassword);
+    await user.save();
+    res.json(user);
+  } else {
+    res.json({ error: "Incorect Password" });
   }
 }
