@@ -25,6 +25,12 @@ const userSchema = new Schema(
       default: [],
       ref: "order",
     },
+    watchList: {
+      type: [mongoose.SchemaTypes.ObjectId],
+      default: [],
+      ref: "product",
+    },
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

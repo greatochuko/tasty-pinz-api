@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import authRouter from "./routes/authRoutes.js";
 import dotenv from "dotenv";
+import productRouter from "./routes/productRoutes.js";
+import { authenticate } from "./middlewares/authMiddleware.js";
 
 dotenv.config();
 
@@ -11,7 +13,10 @@ const MONGODB_URI = "mongodb://127.0.0.1:27017/digimallDB";
 
 app.use(express.static("public"));
 app.use(express.json());
+
+// Routes
 app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
 
 await mongoose.connect(MONGODB_URI);
 app.listen(PORT, () => {
