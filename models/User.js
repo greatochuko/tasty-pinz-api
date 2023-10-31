@@ -16,7 +16,12 @@ const userSchema = new Schema(
     password: { type: String, required: [true, "Please Enter your Password"] },
     imgUrl: { type: String, default: "placeholderProfileImage.png" },
     cart: {
-      type: [mongoose.SchemaTypes.ObjectId],
+      type: [
+        {
+          product: { type: mongoose.SchemaTypes.ObjectId },
+          quantity: { type: Number, default: 1 },
+        },
+      ],
       default: [],
       ref: "product",
     },
