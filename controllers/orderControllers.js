@@ -1,6 +1,20 @@
 import { Order } from "../models/Order.js";
 import { User } from "../models/User.js";
 
+export async function getOrders(req, res) {
+  const orders = await Order.find();
+  const arrOfOrderedProducts = orders.map((order) =>
+    order.products
+      .filter((product) => product.seller === req.userId)
+      .map((product) => ({ ...product, orderId: order._id }))
+  );
+  let sellerOrderedProducts = [];
+  arrOfOrderedProducts.forEach((arr) => {
+    sellerOrderedProducts.push(...arr);
+  });
+  res.json(sellerOrderedProducts);
+}
+
 export async function createOrder(req, res) {
   const { totalPrice, products, shippingCost, notes } = req.body;
   try {
@@ -10,14 +24,13 @@ export async function createOrder(req, res) {
       shippingCost,
       notes,
     });
-    const user = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       req.userId,
       {
         $push: { orders: newOrder._id },
       },
       { new: true }
     );
-    console.log(user.orders);
     res.json(newOrder);
   } catch (err) {
     res.json({ error: err.message });

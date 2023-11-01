@@ -3,6 +3,7 @@ import {
   approveProductOrder,
   cancelOrder,
   createOrder,
+  getOrders,
 } from "../controllers/orderControllers.js";
 import {
   authenticate,
@@ -11,6 +12,7 @@ import {
 
 const orderRouter = Router();
 
+orderRouter.get("/", authenticate, getOrders);
 orderRouter.post("/", authenticate, createOrder);
 orderRouter.put("/:orderId", authenticate, cancelOrder);
 orderRouter.put("/approve/:orderId", authenticateAdmin, approveProductOrder);
