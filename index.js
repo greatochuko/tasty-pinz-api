@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import productRouter from "./routes/productRoutes.js";
 import { authenticate } from "./middlewares/authMiddleware.js";
 import cartRouter from "./routes/cartRoutes.js";
+import orderRouter from "./routes/orderRoutes.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
 await mongoose.connect(MONGODB_URI);
 app.listen(PORT, () => {
