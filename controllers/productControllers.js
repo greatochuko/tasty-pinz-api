@@ -1,4 +1,5 @@
 import { Product } from "../models/Product.js";
+import { User } from "../models/User.js";
 
 export async function getProducts(req, res) {
   const products = await Product.find();
@@ -32,6 +33,34 @@ export async function updateProduct(req, res) {
       { new: true }
     );
     res.json(product);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+}
+
+export async function addProductToWishlist(req, res) {
+  const { productId } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { $push: { wishList: productId } },
+      { new: true }
+    );
+    res.json(user);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+}
+
+export async function removeProductFromWishlist(req, res) {
+  const { productId } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { $pull: { wishList: productId } },
+      { new: true }
+    );
+    res.json(user);
   } catch (err) {
     res.json({ error: err.message });
   }

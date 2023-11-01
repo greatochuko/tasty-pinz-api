@@ -17,7 +17,7 @@ export async function authenticateAdmin(req, res, next) {
   try {
     const { id } = verifyToken(token);
     const user = await User.findById(id);
-    if (user.isAdmin) {
+    if (user.isSeller) {
       req.userId = id;
       next();
     } else {

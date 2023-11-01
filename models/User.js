@@ -18,24 +18,23 @@ const userSchema = new Schema(
     cart: {
       type: [
         {
-          product: { type: mongoose.SchemaTypes.ObjectId },
+          product: { type: mongoose.SchemaTypes.ObjectId, ref: "product" },
           quantity: { type: Number, default: 1 },
         },
       ],
       default: [],
-      ref: "product",
     },
     orders: {
       type: [mongoose.SchemaTypes.ObjectId],
       default: [],
       ref: "order",
     },
-    watchList: {
+    wishList: {
       type: [mongoose.SchemaTypes.ObjectId],
       default: [],
       ref: "product",
     },
-    isAdmin: { type: Boolean, default: false },
+    isSeller: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
