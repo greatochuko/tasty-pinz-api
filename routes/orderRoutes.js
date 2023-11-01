@@ -4,12 +4,15 @@ import {
   cancelOrder,
   createOrder,
 } from "../controllers/orderControllers.js";
-import { authenticateAdmin } from "../middlewares/authMiddleware.js";
+import {
+  authenticate,
+  authenticateAdmin,
+} from "../middlewares/authMiddleware.js";
 
 const orderRouter = Router();
 
-orderRouter.post("/", createOrder);
-orderRouter.put("/:orderId", cancelOrder);
+orderRouter.post("/", authenticate, createOrder);
+orderRouter.put("/:orderId", authenticate, cancelOrder);
 orderRouter.put("/approve/:orderId", authenticateAdmin, approveProductOrder);
 
 export default orderRouter;

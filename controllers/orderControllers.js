@@ -1,4 +1,5 @@
 import { Order } from "../models/Order.js";
+import { User } from "../models/User.js";
 
 export async function createOrder(req, res) {
   const { totalPrice, products, shippingCost, notes } = req.body;
@@ -9,6 +10,14 @@ export async function createOrder(req, res) {
       shippingCost,
       notes,
     });
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      {
+        $push: { orders: newOrder._id },
+      },
+      { new: true }
+    );
+    console.log(user.orders);
     res.json(newOrder);
   } catch (err) {
     res.json({ error: err.message });
