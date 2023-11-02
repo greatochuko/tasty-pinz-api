@@ -34,7 +34,11 @@ const userSchema = new Schema(
       default: [],
       ref: "product",
     },
-    isSeller: { type: Boolean, default: false },
+    stores: {
+      type: [mongoose.SchemaTypes.ObjectId],
+      default: [],
+      ref: "store",
+    },
   },
   { timestamps: true }
 );

@@ -8,10 +8,7 @@ import {
   addProductToWishlist,
   removeProductFromWishlist,
 } from "../controllers/productControllers.js";
-import {
-  authenticate,
-  authenticateAdmin,
-} from "../middlewares/authMiddleware.js";
+import { authenticate } from "../middlewares/authMiddleware.js";
 
 const productRouter = Router();
 
@@ -23,8 +20,8 @@ productRouter.post(
   authenticate,
   removeProductFromWishlist
 );
-productRouter.post("/", authenticateAdmin, createProduct);
-productRouter.put("/:productId", authenticateAdmin, updateProduct);
-productRouter.delete("/:productId", authenticateAdmin, deleteProduct);
+productRouter.post("/", authenticate, createProduct);
+productRouter.put("/:productId", authenticate, updateProduct);
+productRouter.delete("/:productId", authenticate, deleteProduct);
 
 export default productRouter;

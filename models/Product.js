@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema(
   {
-    title: { type: String, required: [true, "Please enter a title"] },
+    name: { type: String, required: [true, "Please enter a title"] },
     description: {
       type: String,
       required: [true, "Please enter a description"],
@@ -16,17 +16,18 @@ const productSchema = new Schema(
       required: [true, "Please enter a price"],
     },
     quantity: { type: Number, default: 1 },
-    images: {
-      type: [String],
+    imageUrl: {
+      type: String,
       required: [true, "Please select at least one image"],
     },
     reviews: { type: [mongoose.SchemaTypes.ObjectId], ref: "review" },
-    rating: { type: Number },
+    rating: { type: Number, default: 5 },
     tags: { type: [String] },
     discount: { type: Number, default: 0 },
-    creator: {
+    store: {
       type: mongoose.SchemaTypes.ObjectId,
-      required: [true, "Product must have a creator"],
+      ref: "store",
+      required: true,
     },
   },
   { timestamps: true }

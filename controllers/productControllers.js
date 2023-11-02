@@ -1,4 +1,5 @@
 import { Product } from "../models/Product.js";
+import { Store } from "../models/Store.js";
 import { User } from "../models/User.js";
 
 export async function getProducts(req, res) {
@@ -12,10 +13,30 @@ export async function getOneProduct(req, res) {
 }
 
 export async function createProduct(req, res) {
+  const {
+    name,
+    description,
+    category,
+    price,
+    quantity,
+    imageUrl,
+    storeId,
+    ...others
+  } = req.body;
   try {
     const newProduct = await Product.create({
-      ...req.body,
-      creator: req.userId,
+      ...others,
+      name,
+      description,
+      category,
+      price,
+      quantity,
+      imageUrl,
+      store: storeId,
+    });
+    // Add new product id to store products
+    await Store.findByIdAndUpdate(storeId, {
+      $push: { menu: newProduct._id },
     });
     res.json(newProduct);
   } catch (err) {

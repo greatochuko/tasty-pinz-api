@@ -4,8 +4,10 @@ import { generateToken } from "../utils/jwtUtils.js";
 
 export async function signup(req, res) {
   const { firstName, lastName, email, password } = req.body;
-  const hashedPassword = await hashPassword(password);
   try {
+    // hash password
+    const hashedPassword = await hashPassword(password);
+
     // Create new user
     const newUser = await User.create({
       firstName,
