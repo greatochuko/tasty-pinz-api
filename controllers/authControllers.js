@@ -3,21 +3,22 @@ import { comparePassword, hashPassword } from "../utils/authUtils.js";
 import { generateToken } from "../utils/jwtUtils.js";
 
 export async function signup(req, res) {
-  const { firstName, lastName, email, password } = req.body;
+  const { fullName, email, password } = req.body;
   try {
     // hash password
     const hashedPassword = await hashPassword(password);
 
     // Create new user
     const newUser = await User.create({
-      firstName,
-      lastName,
+      fullName,
       email,
       password: hashedPassword,
     });
     const token = generateToken(newUser._id);
     res.json({ token });
   } catch (err) {
+    if (err.message.includes("duplicate key error"))
+      return res.status(400).json({ error: "Email already in use" });
     res.status(401).json({ error: err.message });
   }
 }
@@ -25,6 +26,8 @@ export async function signup(req, res) {
 export async function login(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+
+  console.log(req.body);
 
   // Check if user exists
   if (user) {
@@ -42,7 +45,6 @@ export async function login(req, res) {
       res.status(401).json({ error: "Username or Password incorrect" });
     }
   } else {
-    console.log("user doesn't exists");
     res.status(401).json({ error: "Username or Password incorrect" });
   }
 }

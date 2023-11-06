@@ -7,6 +7,7 @@ import cartRouter from "./routes/cartRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import storeRouter from "./routes/storeRoutes.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -14,9 +15,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = "mongodb://127.0.0.1:27017/tasty-pinz";
 
-app.use(express.static("public"));
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
 
 // Routes
 app.use("/api/auth", authRouter);

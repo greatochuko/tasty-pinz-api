@@ -2,11 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
-    firstName: {
+    fullName: {
       type: String,
       required: [true, "Please Enter your First Name"],
     },
-    lastName: { type: String, required: [true, "Please Enter your Last Name"] },
     email: {
       type: String,
       required: [true, "Please Enter your Email"],
