@@ -17,7 +17,8 @@ export async function getUserProfile(req, res) {
       .populate({
         path: "orders",
         select: "status totalPrice products",
-      });
+      })
+      .select("-password -createdAt -updatedAt -__v");
     res.json(user);
   } catch (err) {
     res.json({ error: err.message });
