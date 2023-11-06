@@ -33,10 +33,10 @@ const userSchema = new Schema(
       default: [],
       ref: "product",
     },
-    stores: {
+    vendors: {
       type: [mongoose.SchemaTypes.ObjectId],
       default: [],
-      ref: "store",
+      ref: "vendor",
     },
   },
   { timestamps: true }

@@ -24,9 +24,9 @@ const productSchema = new Schema(
     rating: { type: Number, default: 5 },
     tags: { type: [String] },
     discount: { type: Number, default: 0 },
-    store: {
+    vendor: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "store",
+      ref: "vendor",
       required: true,
     },
   },

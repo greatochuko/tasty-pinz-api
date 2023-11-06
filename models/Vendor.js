@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const storeSchema = new mongoose.Schema({
+const vendorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   logoUrl: { type: String, required: true },
   phone: { type: String, required: true },
@@ -14,4 +14,4 @@ const storeSchema = new mongoose.Schema({
   creator: { type: mongoose.SchemaTypes.ObjectId, required: true },
 });
 
-export const Store = mongoose.model("store", storeSchema);
+export const Vendor = mongoose.model("vendor", vendorSchema);

@@ -1,9 +1,9 @@
 import { Product } from "../models/Product.js";
-import { Store } from "../models/Store.js";
+import { Vendor } from "../models/Vendor.js";
 import { User } from "../models/User.js";
 
 export async function getProducts(req, res) {
-  const products = await Product.find();
+  const products = await Product.find().select("-createdAt -updatedAt -__v ");
   res.json(products);
 }
 
@@ -20,7 +20,7 @@ export async function createProduct(req, res) {
     price,
     quantity,
     imageUrl,
-    storeId,
+    vendorId,
     ...others
   } = req.body;
   try {
@@ -32,10 +32,10 @@ export async function createProduct(req, res) {
       price,
       quantity,
       imageUrl,
-      store: storeId,
+      vendor: vendorId,
     });
-    // Add new product id to store products
-    await Store.findByIdAndUpdate(storeId, {
+    // Add new product id to Vendor products
+    await Vendor.findByIdAndUpdate(vendorId, {
       $push: { menu: newProduct._id },
     });
     res.json(newProduct);

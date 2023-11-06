@@ -6,7 +6,7 @@ import productRouter from "./routes/productRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import userRouter from "./routes/userRoutes.js";
-import storeRouter from "./routes/storeRoutes.js";
+import vendorRouter from "./routes/vendorRoutes.js";
 import cors from "cors";
 
 dotenv.config();
@@ -25,7 +25,7 @@ app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
-app.use("/api/store", storeRouter);
+app.use("/api/vendor", vendorRouter);
 
 await mongoose.connect(MONGODB_URI);
 app.listen(PORT, () => {
