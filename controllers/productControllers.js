@@ -3,7 +3,9 @@ import { Vendor } from "../models/Vendor.js";
 import { User } from "../models/User.js";
 
 export async function getProducts(req, res) {
-  const products = await Product.find().select("-createdAt -updatedAt -__v ");
+  const products = await Product.find()
+    .select("-createdAt -updatedAt -__v ")
+    .populate({ path: "vendor" });
   res.json(products);
 }
 
