@@ -7,7 +7,8 @@ export async function getUserProfile(req, res) {
         path: "cart",
         populate: {
           path: "product",
-          select: "title description category price",
+          select: "-createdAt -updatedAt -__v ",
+          populate: { path: "vendor", select: "name" },
         },
       })
       .populate({

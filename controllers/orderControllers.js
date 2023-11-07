@@ -54,7 +54,6 @@ export async function approveProductOrder(req, res) {
   const { orderId } = req.params;
   try {
     const order = await Order.findById(orderId);
-    console.log(order);
     order.products.find((product) => product.id === productId).status =
       "processed";
     await order.save();

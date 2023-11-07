@@ -2,16 +2,14 @@ import { User } from "../models/User.js";
 
 export async function addItemToCart(req, res) {
   const { productId, quantity } = req.body;
-  console.log(req.body);
-  res.json("asf");
-  // try {
-  //   const user = await User.findById(req.userId);
-  //   user.cart.push({ product: productId, quantity });
-  //   await user.save();
-  //   res.json(user);
-  // } catch (err) {
-  //   res.json({ error: err.message });
-  // }
+  try {
+    const user = await User.findById(req.userId);
+    user.cart.push({ product: productId, quantity });
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
 }
 
 export async function increaseCartItemQuantity(req, res) {
