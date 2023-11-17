@@ -11,7 +11,7 @@ import { authenticate } from "../middlewares/authMiddleware.js";
 const cartRouter = Router();
 
 cartRouter.post("/add", authenticate, addItemToCart);
-cartRouter.delete("/remove/:productId", authenticate, removeItemFromCart);
+cartRouter.delete("/:productId", authenticate, removeItemFromCart);
 cartRouter.put("/increase/:productId", authenticate, increaseCartItemQuantity);
 cartRouter.put("/decrease/:productId", authenticate, decreaseCartItemQuantity);
 cartRouter.delete("/clear", authenticate, clearCart);
