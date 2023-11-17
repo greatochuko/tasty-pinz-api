@@ -9,6 +9,22 @@ export async function getProducts(req, res) {
   res.json(products);
 }
 
+export async function searchProducts(req, res) {
+  const searchQuery = req.query.q;
+  const products = await Product.find()
+    .select("-createdAt -updatedAt -__v")
+    .populate({ path: "vendor" });
+
+  let searchedProducts = products.map((a) => a);
+
+  if (searchQuery !== "null")
+    searchedProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+  res.json(searchedProducts);
+}
+
 export async function getOneProduct(req, res) {
   const product = await Product.findById(req.params.productId);
   res.json(product);

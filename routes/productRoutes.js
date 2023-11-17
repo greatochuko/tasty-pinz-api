@@ -7,12 +7,14 @@ import {
   deleteProduct,
   addProductToWishlist,
   removeProductFromWishlist,
+  searchProducts,
 } from "../controllers/productControllers.js";
 import { authenticate } from "../middlewares/authMiddleware.js";
 
 const productRouter = Router();
 
 productRouter.get("/", getProducts);
+productRouter.get("/search", searchProducts);
 productRouter.get("/:productId", getOneProduct);
 productRouter.post("/add-to-wishlist", authenticate, addProductToWishlist);
 productRouter.post(
